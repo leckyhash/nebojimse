@@ -1,0 +1,13 @@
+{
+  "name": "Nebojím se – FN Brno",
+  "short_name": "Nebojím se",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#FFF6EC",
+  "theme_color": "#FFF6EC",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-180.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}
