@@ -1,59 +1,48 @@
-# Nebojím se / I'm Not Scared — Hack jak Brno 2026, Challenge 05
+# Nebojím se výkonu — Hack jak Brno 2026, FN Brno challenge
 
-A zero-install web app (PWA) that prepares children aged 3–13 and their parents for a blood test, ECG or ultrasound at FN Brno Children's Hospital.
+A guide that walks a child through the exam truthfully, before they arrive. Built to the official brief (`project_information/Nebojim_se_vykonu_zadani_vyzvy.docx`) and presentation.
 
-## Run it
+**Core rule from the brief: truth and trust.** The app shows only what really happens, in order, with how long it takes. Nothing is added, promised or played down. All texts come from the brief's step table (section 5) and the "sensitive moments" slide, and a doctor approves them before use.
+
+## What it does
+
+| Requirement in the brief | Where |
+|---|---|
+| Two exams, from arrival to leaving | Blood test (9 steps) and heart exam (6 steps) in `content.js` |
+| Real places | 27 FN Brno photos in `img/`, the echo sound and screen video in `media/` |
+| Preschool version | Big photo, one short sentence, icons, voice plays automatically, guide character |
+| Autism (PAS) version | Literal text, fixed order with a step track, duration on every step, "what you will feel or hear" and "what happens / what you do" lists, identical on every run |
+| Sensitive photos choice | The parent chooses at the start and can change it any time (⚙). When hidden, the step stays and a neutral picture is shown |
+| Czech + Ukrainian, text and voice | cs, uk (and en). Voice is pre-recorded in `audio/` (macOS voices Zuzana, Lesya, Daniel), so it works offline on every phone |
+| Original guide | The child picks the hospital's own clown (from the ambulance wall) or Pip the hedgehog. The PAS version can also pick "no guide" |
+| Parent version | "Informace pro rodiče": the same steps in full, how to talk with the child, the sensitive moments |
+| Doctor approves texts | `/lekar/` → "Kontrola textů": every text in every version and language, photos, open questions, checkboxes, print for sign-off |
+| Extras | QR codes from `/lekar/` (exam + version + language), offline PWA, no personal data |
+
+Special steps: **Vpich** (the needle) has a count-to-20 practice with voice. **Echo** plays the real, loud heartbeat recording in advance (the brief says hearing it first helps).
+
+## Run
 
 ```bash
-python3 -m http.server 5173
+python3 -m http.server 5174
 ```
-Open http://localhost:5173. No build step and no dependencies.
 
-To demo on a real phone, deploy the folder to any static HTTPS host (GitHub Pages, Netlify, Vercel). Service workers only work over HTTPS or on localhost.
+After changing texts or media, run this once:
 
-## QR code on the invitation letter
-
-The URL can pre-select everything, so the parent only has to tap "Let's go":
-
+```bash
+node tools/build.js
 ```
-https://<host>/?exam=blood&lang=cs&age=m
-```
-- `exam`: `blood` | `ecg` | `us`
-- `lang`: `cs` | `sk` | `uk` | `en`
-- `age`: `y` (3–5) | `m` (6–9) | `t` (10–13)
 
-## Doctor page: QR generator
+It re-records only the changed voice texts and refreshes the offline file list and cache version in `sw.js`.
 
-`/lekar/` (live: https://leckyhash.github.io/nebojimse/lekar/) lets staff pick the exam, the age group and the family's language. It shows a printable card in the family's language with the QR code, plus PNG download and copy-link buttons. The interface is in Czech or English, and no patient data is entered or encoded.
+## Open questions for the doctor (also shown in /lekar/)
 
-To put it on a real subdomain (e.g. `lekar.nebojimse.cz`), point a DNS CNAME at `leckyhash.github.io` and host `lekar/` as its own Pages site or behind a redirect.
+- Blood test, waiting room: is the waiting room in the photo the one used for blood tests?
+- Blood test, needle: are the legs always held, or only sometimes? Who holds them?
+- Blood test, reward: does every child get one of the rewards?
+- Heart exam, route photos: is the order hall → corridor → cardiology entrance → waiting room right?
+- Heart exam, blood pressure: the cuff photos come from the "Odběr krve" folder. Is it the same device?
 
-## User flow (matches the concept PDF)
+## Not in git
 
-| Step | Screen |
-|---|---|
-| 0 | QR → opens in the browser, all files cached for offline use (service worker) |
-| 1 | Setup: language, exam, age group |
-| 2 | Courage Thermometer BEFORE (5 emojis) |
-| 3 | 360° tour: Entrance → Waiting room → exam room. Drag or use the gyroscope, tap the pulsing hotspots, 🔊 read-aloud, door arrow to the next room |
-| 4 | "What will happen" 4-step comic for the child + "For parents" tab (preparation, helpful phrases, phrases to avoid, a tip for the child's age) |
-| 5 | 3-question quiz with only warm feedback → "Super Explorer" certificate |
-| 6 | Courage Thermometer AFTER → before/after comparison + summary card saved as a PNG (shared via the iOS/Android share sheet) |
-
-## Files
-
-- `content.js`: **all text**, in 4 languages × 3 age variants. Static and reviewable by the hospital, no AI at runtime.
-- `panos.js`: the 360° rooms. They are currently drawn illustrations. To use real photos, add 4000×1000 panoramas to `/img`, set `PANO_PHOTOS.room = 'img/…jpg'`, and add them to `ASSETS` in `sw.js`. Hotspot x/y values in `content.js` use the same pixel space.
-- `app.js`: screens, the panorama viewer (drag, inertia, gyroscope, wrap-around), speech, and the summary card.
-- `sw.js`: offline cache.
-
-## Privacy
-
-There are no accounts, names or server calls. The only thing stored is local progress in `localStorage` on the phone: language, exam, age group, and the two emoji answers.
-
-## Known MVP limits / next steps
-
-- Replace the illustrations with real 360° photos of FN Brno (the hospital would need to supply or approve them).
-- Read-aloud uses the phone's built-in voices. Slovak and Ukrainian voices aren't installed on every device. For production, record audio files and cache them.
-- The Slovak and Ukrainian texts should be checked by native speakers, and all content reviewed by clinic staff.
-- Optional: anonymous, opt-in aggregate of before/after scores for the hospital, to measure impact.
+`project_information/` (the brief, presentation and original photos) is git-ignored. The resized photos in `img/` are real hospital photos. Ask FN Brno before publishing them on a public host.
