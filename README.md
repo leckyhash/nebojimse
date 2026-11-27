@@ -22,6 +22,12 @@ https://<host>/?exam=blood&lang=cs&age=m
 - `lang`: `cs` | `sk` | `uk` | `en`
 - `age`: `y` (3–5) | `m` (6–9) | `t` (10–13)
 
+## Doctor page: QR generator
+
+`/lekar/` (live: https://leckyhash.github.io/nebojimse/lekar/) lets staff pick the exam, the age group and the family's language. It shows a printable card in the family's language with the QR code, plus PNG download and copy-link buttons. The interface is in Czech or English, and no patient data is entered or encoded.
+
+To put it on a real subdomain (e.g. `lekar.nebojimse.cz`), point a DNS CNAME at `leckyhash.github.io` and host `lekar/` as its own Pages site or behind a redirect.
+
 ## User flow (matches the concept PDF)
 
 | Step | Screen |
