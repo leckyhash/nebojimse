@@ -71,7 +71,7 @@ function cacheAudio() {
   for (let n = 1; n <= 20; n++) files.push(audioSrc(`n${n}`));
   ['pickGuide', 'planIntro', 'doneText', 'echoWarn', 'count20'].forEach(k => files.push(audioSrc(`ui-${k}`)));
   caches.open(AUDIO_CACHE)
-    .then(c => Promise.all(files.map(f => c.match(f).then(hit => hit ? true : c.add(f).then(() => true, () => false)))))
+    .then(c => Promise.all(files.map(f => c.match(f).then(hit => hit ? true : c.add(new Request(f, { cache: 'reload' })).then(() => true, () => false)))))
     .then(ok => { if (ok.every(Boolean) && want === `${S.lang}-${S.exam}`) { voiceReady = want; markOffline(); } })
     .catch(() => {});
 }
@@ -110,6 +110,7 @@ function go(screen, step) {
 }
 
 function render() {
+  if (S.screen === 'plan' && S.ver !== 'pas') { S.screen = 'step'; S.step = 0; save(); }
   document.documentElement.lang = S.lang;
   document.title = ui('appName');
   const key = S.screen + S.step;
