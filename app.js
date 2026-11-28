@@ -227,8 +227,8 @@ const SCREENS = {
         <h1>${ui('doneTitle')}</h1>
         <p class="lead">${ui('doneText')}</p>${listenBtn(audioSrc('ui-doneText'), 'mini')}
       </div>
-      <ol class="plan compact">${e.steps.map((s, i) => `<li style="--c:${e.color}"><span class="num">${i + 1}</span><span class="ic">${s.icon}</span><div><b>${t(s.title)}</b>${s.dur ? `<small>${icon('clock', 15)} ${t(s.dur)}</small>` : ''}</div></li>`).join('')}</ol>
-      <p class="total">${icon('clock', 18)} ${t(e.total)}</p>
+      ${S.ver === 'pas' ? `<ol class="plan compact">${e.steps.map((s, i) => `<li style="--c:${e.color}"><span class="num">${i + 1}</span><span class="ic">${s.icon}</span><div><b>${t(s.title)}</b>${s.dur ? `<small>${icon('clock', 15)} ${t(s.dur)}</small>` : ''}</div></li>`).join('')}</ol>
+      <p class="total">${icon('clock', 18)} ${t(e.total)}</p>` : ''}
       <button class="cta" data-act="again">${icon('again')}${ui('again')}</button>
       <button class="cta secondary" data-act="parent">${ui('openParent')}</button>`;
   },
@@ -297,10 +297,10 @@ app.addEventListener('click', e => {
   switch (el.dataset.act) {
     case 'startChild': if (S.exam && S.ver && S.photos) { cacheAudio(); go('guide', 0); } break;
     case 'parent': go('parent'); break;
-    case 'pickGuide': S.guide = el.dataset.v; go('plan'); break;
+    case 'pickGuide': S.guide = el.dataset.v; S.ver === 'pas' ? go('plan') : go('step', 0); break;
     case 'begin': go('step', 0); break;
     case 'next': S.step < steps().length - 1 ? go('step', S.step + 1) : go('done'); break;
-    case 'prev': S.step > 0 ? go('step', S.step - 1) : go('plan'); break;
+    case 'prev': S.step > 0 ? go('step', S.step - 1) : go(firstScreen()); break;
     case 'again': go('guide', 0); break;
     case 'back': back(); break;
     case 'settings': openSheet(); break;
@@ -314,9 +314,13 @@ app.addEventListener('scroll', e => {
   document.querySelectorAll('.gdots button').forEach((b, j) => b.classList.toggle('on', i === j));
 }, true);
 
+// The overview of all steps is only shown in the exact (PAS) version, where a visual schedule helps.
+// Preschoolers go from choosing the guide straight to step 1.
+const firstScreen = () => (S.ver === 'pas' ? 'plan' : 'guide');
+
 function back() {
   const order = { guide: 'setup', plan: 'guide', step: null, done: 'step', parent: 'setup' };
-  if (S.screen === 'step') { S.step > 0 ? go('step', S.step - 1) : go('plan'); return; }
+  if (S.screen === 'step') { S.step > 0 ? go('step', S.step - 1) : go(firstScreen()); return; }
   if (S.screen === 'done') { go('step', steps().length - 1); return; }
   go(order[S.screen] || 'setup');
 }
