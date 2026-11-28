@@ -259,7 +259,8 @@ function thumb(s) {
   return id ? `<img class="thumb" src="img/${id}.jpg" alt="" loading="lazy">` : `<span class="thumb ic">${s.icon}</span>`;
 }
 function gallery(s) {
-  if (!s.photos.length) return `<div class="gallery"><figure class="neutral"><span>${s.icon}</span><figcaption>${ui('noPhoto')}</figcaption></figure></div>`;
+  // no photo for this step: a big emoji on a soft background in the exam's color
+  if (!s.photos.length) return `<div class="gallery"><figure class="art" style="--c:${exam().color}" aria-hidden="true">${(s.art || [s.icon]).map(a => `<span>${a}</span>`).join('')}</figure></div>`;
   // several hidden photos collapse into one neutral picture
   const ids = s.photos.filter((id, i, arr) => !isHidden(id) || arr.findIndex(isHidden) === i);
   const figs = ids.map(id => isHidden(id)
