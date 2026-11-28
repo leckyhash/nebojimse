@@ -44,7 +44,17 @@ function stopAudio() {
   if (playingBtn) playingBtn.classList.remove('on');
   playingBtn = null;
 }
-const listenBtn = (src, cls = '') => `<button class="listen ${cls}" data-audio="${src}" aria-label="${ui('listen')}">🔊 <span>${ui('listen')}</span></button>`;
+const ICON = {
+  speaker: '<path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5H4Z"/><path d="M15.5 9a4 4 0 0 1 0 6"/><path d="M18 6.5a7.5 7.5 0 0 1 0 11"/>',
+  back: '<path d="m14.5 6-6 6 6 6"/>',
+  next: '<path d="m9.5 6 6 6-6 6"/>',
+  gear: '<path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/>',
+  play: '<path d="M8 5.5v13l10.5-6.5L8 5.5Z"/>',
+  again: '<path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3"/><path d="M4.5 4.5v4h4"/>',
+  clock: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
+};
+const icon = (name, size = 20) => `<svg class="ico" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[name]}</svg>`;
+const listenBtn = (src, cls = '') => `<button class="listen ${cls}" data-audio="${src}">${icon('speaker')}<span>${ui('listen')}</span></button>`;
 
 // Download this language's voice files for offline use (photos are cached by the service worker)
 function cacheAudio() {
@@ -101,9 +111,9 @@ function render() {
   lastKey = key;
   const header = S.screen === 'setup' ? '' : `
     <header class="top">
-      <button class="icon-btn" data-act="back" aria-label="${ui('back')}">‹</button>
+      <button class="icon-btn" data-act="back" aria-label="${ui('back')}">${icon('back', 22)}</button>
       <div class="top-title">${exam() ? `${exam().icon} ${t(exam().name)}` : ''}</div>
-      <button class="icon-btn" data-act="settings" aria-label="${ui('settings')}">⚙</button>
+      <button class="icon-btn" data-act="settings" aria-label="${ui('settings')}">${icon('gear', 22)}</button>
     </header>`;
   app.innerHTML = header + `<main class="screen${enter} screen-${S.screen} ver-${S.ver}">${SCREENS[S.screen]()}</main><div class="sheet-backdrop" id="sheet" hidden></div>`;
   if (window.__offline) markOffline();
@@ -114,13 +124,13 @@ function choice(group, value, title, sub, sel, extra = '') {
 }
 function settingsFields(withExam) {
   return `
-    <h2 class="label">🌍 ${ui('lang')}</h2>
+    <h2 class="label">${ui('lang')}</h2>
     <div class="choices three">${LANGS.map(l => choice('lang', l, LANG_NAMES[l], '', S.lang === l)).join('')}</div>
-    ${withExam ? `<h2 class="label">🩺 ${ui('exam')}</h2>
+    ${withExam ? `<h2 class="label">${ui('exam')}</h2>
     <div class="choices two">${Object.entries(EXAMS).map(([id, e]) => choice('exam', id, t(e.name), '', S.exam === id, `<span class="big">${e.icon}</span>`)).join('')}</div>` : ''}
-    <h2 class="label">🧒 ${ui('version')}</h2>
-    <div class="choices">${choice('ver', 'pre', ui('verPre'), ui('verPreSub'), S.ver === 'pre', '<span class="big">🖼️</span>')}${choice('ver', 'pas', ui('verPas'), ui('verPasSub'), S.ver === 'pas', '<span class="big">📋</span>')}</div>
-    <h2 class="label">🙈 ${ui('photos')}</h2>
+    <h2 class="label">${ui('version')}</h2>
+    <div class="choices">${choice('ver', 'pre', ui('verPre'), ui('verPreSub'), S.ver === 'pre')}${choice('ver', 'pas', ui('verPas'), ui('verPasSub'), S.ver === 'pas')}</div>
+    <h2 class="label">${ui('photos')}</h2>
     <div class="choices two">${choice('photos', 'show', ui('photosShow'), ui('photosShowSub'), S.photos === 'show')}${choice('photos', 'hide', ui('photosHide'), ui('photosHideSub'), S.photos === 'hide')}</div>
     <p class="fine left">${ui('photosNote')}</p>`;
 }
@@ -133,16 +143,16 @@ const SCREENS = {
         <div class="hero-guides"><img class="clown" src="img/klaun.png" alt="" width="84" height="84">${pip(84)}</div>
         <h1>${ui('appName')}</h1>
         <p class="lead">${ui('tagline')}</p>
-        <p class="badges"><span class="badge">🏥 FN Brno · Dětská nemocnice</span><span class="badge ok" id="offline-badge" hidden>✓ ${ui('offline')}</span></p>
+        <p class="badges"><span class="badge">FN Brno · Dětská nemocnice</span><span class="badge ok" id="offline-badge" hidden>✓ ${ui('offline')}</span></p>
       </section>
       <div class="panel">
         <h2 class="panel-title">${ui('setupTitle')}</h2>
         ${settingsFields(true)}
       </div>
-      <button class="cta" data-act="startChild" ${ready ? '' : 'disabled'}>${ui('startChild')} →</button>
-      <button class="cta secondary" data-act="parent" ${S.exam ? '' : 'disabled'}>👪 ${ui('openParent')}</button>
+      <button class="cta" data-act="startChild" ${ready ? '' : 'disabled'}>${ui('startChild')}</button>
+      <button class="cta secondary" data-act="parent" ${S.exam ? '' : 'disabled'}>${ui('openParent')}</button>
       ${ready ? '' : `<p class="fine">${ui('chooseAll')}</p>`}
-      <p class="fine">📝 ${ui('draft')}<br>🔒 ${ui('privacy')}</p>`;
+      <p class="fine">${ui('draft')}<br>${ui('privacy')}</p>`;
   },
 
   guide() {
@@ -167,11 +177,11 @@ const SCREENS = {
           <li style="--c:${e.color}">
             <span class="num">${i + 1}</span>
             ${thumb(s)}
-            <div><b>${t(s.title)}</b>${s.dur ? `<small>⏱ ${t(s.dur)}</small>` : ''}</div>
+            <div><b>${t(s.title)}</b>${s.dur ? `<small>${icon('clock', 15)} ${t(s.dur)}</small>` : ''}</div>
           </li>`).join('')}
       </ol>
-      <p class="total">⏱ ${t(e.total)}</p>
-      <button class="cta" data-act="begin">${ui('start')} →</button>`;
+      <p class="total">${icon('clock', 18)} ${t(e.total)}</p>
+      <button class="cta" data-act="begin">${ui('start')}${icon('next')}</button>`;
   },
 
   step() {
@@ -187,9 +197,9 @@ const SCREENS = {
         ${all.map((x, i) => `<i class="${i < S.step ? 'done' : i === S.step ? 'cur' : ''}" style="--c:${e.color}"></i>`).join('')}
       </div>
       <p class="step-of">${ui('stepOf', { n, total: all.length })}</p>
-      <h1 class="step-title"><span>${s.icon}</span> ${t(s.title)}</h1>
+      <h1 class="step-title"><span class="step-ic" style="--c:${e.color}" aria-hidden="true">${s.icon}</span>${t(s.title)}</h1>
       ${gallery(s)}
-      ${s.dur ? `<p class="dur" style="--c:${e.color}">⏱ <span><small>${ui('duration')}</small>${t(s.dur)}</span></p>` : ''}
+      ${s.dur ? `<p class="dur" style="--c:${e.color}">${icon('clock', 26)}<span><small>${ui('duration')}</small>${t(s.dur)}</span></p>` : ''}
       <div class="step-text ${S.guide && S.guide !== 'none' ? 'with-guide' : ''}">
         ${guideAvatar(S.ver === 'pre' ? 72 : 48)}
         <div><p>${text}</p>${listenBtn(audioSrc(`${S.exam}-${s.id}-${S.ver}`), 'mini')}</div>
@@ -198,8 +208,8 @@ const SCREENS = {
       ${s.extra === 'count20' ? count20() : ''}
       ${s.extra === 'echo' ? echoBox() : ''}
       <nav class="stepnav">
-        <button class="cta secondary" data-act="prev">‹ ${ui('back')}</button>
-        <button class="cta" data-act="next">${n === all.length ? ui('close') : ui('next')} ›</button>
+        <button class="cta secondary" data-act="prev">${icon('back')}${ui('back')}</button>
+        <button class="cta" data-act="next">${n === all.length ? ui('close') : ui('next')}${icon('next')}</button>
       </nav>`;
   },
 
@@ -211,29 +221,29 @@ const SCREENS = {
         <h1>${ui('doneTitle')}</h1>
         <p class="lead">${ui('doneText')}</p>${listenBtn(audioSrc('ui-doneText'), 'mini')}
       </div>
-      <ol class="plan compact">${e.steps.map((s, i) => `<li style="--c:${e.color}"><span class="num">${i + 1}</span><span class="ic">${s.icon}</span><div><b>${t(s.title)}</b>${s.dur ? `<small>⏱ ${t(s.dur)}</small>` : ''}</div></li>`).join('')}</ol>
-      <p class="total">⏱ ${t(e.total)}</p>
-      <button class="cta" data-act="again">↺ ${ui('again')}</button>
-      <button class="cta secondary" data-act="parent">👪 ${ui('openParent')}</button>`;
+      <ol class="plan compact">${e.steps.map((s, i) => `<li style="--c:${e.color}"><span class="num">${i + 1}</span><span class="ic">${s.icon}</span><div><b>${t(s.title)}</b>${s.dur ? `<small>${icon('clock', 15)} ${t(s.dur)}</small>` : ''}</div></li>`).join('')}</ol>
+      <p class="total">${icon('clock', 18)} ${t(e.total)}</p>
+      <button class="cta" data-act="again">${icon('again')}${ui('again')}</button>
+      <button class="cta secondary" data-act="parent">${ui('openParent')}</button>`;
   },
 
   parent() {
     const e = exam();
     return `
-      <h1>👪 ${ui('parentTitle')}: ${t(e.name)}</h1>
+      <h1>${ui('parentTitle')}: ${t(e.name)}</h1>
       <p class="lead">${ui('parentIntro')}</p>
-      <div class="panel"><h2 class="panel-title">💬 ${ui('howTalk')}</h2><ul class="talk">${TALK.map(x => `<li>${t(x)}</li>`).join('')}</ul></div>
-      <div class="panel warn"><h2 class="panel-title">⚠️ ${ui('moments')}</h2>
+      <div class="panel"><h2 class="panel-title">${ui('howTalk')}</h2><ul class="talk">${TALK.map(x => `<li>${t(x)}</li>`).join('')}</ul></div>
+      <div class="panel warn"><h2 class="panel-title">${ui('moments')}</h2>
         ${e.moments.map(m => `<div class="moment"><b>${t(m.t)}</b><p>${t(m.d)}</p></div>`).join('')}</div>
-      <div class="panel"><h2 class="panel-title">📋 ${ui('stepsTable')}</h2>
+      <div class="panel"><h2 class="panel-title">${ui('stepsTable')}</h2>
         <ol class="ptable">${e.steps.map((s, i) => `
           <li><span class="num" style="--c:${e.color}">${i + 1}</span>
-            <div><b>${t(s.title)}</b><p>${t(s.parent)}</p>${s.dur ? `<small>⏱ ${t(s.dur)}</small>` : ''}</div></li>`).join('')}
+            <div><b>${t(s.title)}</b><p>${t(s.parent)}</p>${s.dur ? `<small>${icon('clock', 15)} ${t(s.dur)}</small>` : ''}</div></li>`).join('')}
         </ol>
-        <p class="total">⏱ ${t(e.total)}</p>
+        <p class="total">${icon('clock', 18)} ${t(e.total)}</p>
       </div>
-      <p class="fine">📝 ${ui('draft')}</p>
-      <button class="cta" data-act="startChild" ${S.ver && S.photos ? '' : 'disabled'}>${ui('startChild')} →</button>`;
+      <p class="fine">${ui('draft')}</p>
+      <button class="cta" data-act="startChild" ${S.ver && S.photos ? '' : 'disabled'}>${ui('startChild')}</button>`;
   },
 };
 
@@ -250,16 +260,16 @@ function gallery(s) {
     ? `<figure class="neutral"><span>🙈</span><b>${ui('hiddenPhoto')}</b><figcaption>${ui('hiddenSub')}</figcaption></figure>`
     : `<figure><img src="img/${id}.jpg" alt="${t(PHOTOS[id])}" loading="lazy"><figcaption>${t(PHOTOS[id])}</figcaption></figure>`);
   return `<div class="gallery" id="gallery">${figs.join('')}</div>
-    ${figs.length > 1 ? `<div class="gdots">${figs.map((_, i) => `<button data-act="gto" data-v="${i}" class="${i ? '' : 'on'}" aria-label="${i + 1}"></button>`).join('')}</div>` : ''}`;
+    ${figs.length > 1 ? `<div class="gdots">${figs.map((_, i) => `<button data-act="gto" data-v="${i}" class="${i ? '' : 'on'}" aria-label="${i + 1} / ${figs.length}"></button>`).join('')}</div>` : ''}`;
 }
 function count20() {
-  return `<div class="extra count"><p>${ui('count20')}</p><div class="counter" id="counter">0<small>/20</small></div>
-    <button class="cta small" data-act="count">▶ ${ui('countStart')}</button></div>`;
+  return `<div class="extra count"><p>${ui('count20')}</p><div class="counter" id="counter" aria-live="polite">0<small>/20</small></div>
+    <button class="cta small" data-act="count">${icon('play')}${ui('countStart')}</button></div>`;
 }
 function echoBox() {
-  return `<div class="extra echo"><h3>🔊 ${ui('echoTitle')}</h3><p>${ui('echoWarn')}</p>
-    <button class="cta small" data-audio="media/zvuk_srdicka.m4a">▶ ${ui('playSound')}</button>
-    <details><summary>🎬 ${ui('playVideo')}</summary><video src="media/echo.mp4" controls playsinline preload="none" poster="img/echo_obrazovka.jpg"></video></details></div>`;
+  return `<div class="extra echo"><h3>${ui('echoTitle')}</h3><p>${ui('echoWarn')}</p>
+    <button class="cta small" data-audio="media/zvuk_srdicka.m4a">${icon('play')}${ui('playSound')}</button>
+    <details><summary>${ui('playVideo')}</summary><video src="media/echo.mp4" controls playsinline preload="none" poster="img/echo_obrazovka.jpg"></video></details></div>`;
 }
 
 // ---------------- events ----------------
@@ -325,7 +335,7 @@ function openSheet() { stopAudio(); renderSheet(); document.getElementById('shee
 function renderSheet() {
   const sheet = document.getElementById('sheet');
   sheet.innerHTML = `<div class="sheet" role="dialog" aria-modal="true" aria-label="${ui('settings')}">
-    <h2 class="panel-title">⚙ ${ui('settings')}</h2>${settingsFields(false)}
+    <h2 class="panel-title">${ui('settings')}</h2>${settingsFields(false)}
     <button class="cta" data-close>${ui('close')}</button>
     <button class="cta secondary" data-home>${ui('home')}</button></div>`;
   sheet.onclick = ev => {
