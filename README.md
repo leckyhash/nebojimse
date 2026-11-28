@@ -10,10 +10,10 @@ A guide that walks a child through the exam truthfully, before they arrive. Buil
 |---|---|
 | Two exams, from arrival to leaving | Blood test (9 steps) and heart exam (6 steps) in `content.js` |
 | Real places | 27 FN Brno photos in `img/`, the echo sound and screen video in `media/` |
-| Preschool version | Big photo, one short sentence, icons, voice plays automatically, guide character |
+| Preschool version | Big photo, one short sentence, icons, voice on the Listen button, guide character |
 | Autism (PAS) version | Literal text, fixed order with a step track, duration on every step, "what you will feel or hear" and "what happens / what you do" lists, identical on every run |
 | Sensitive photos choice | The parent chooses at the start and can change it any time (⚙). When hidden, the step stays and a neutral picture is shown |
-| Czech + Ukrainian, text and voice | cs, uk (and en). Voice is pre-recorded in `audio/` (macOS voices Zuzana, Lesya, Daniel), so it works offline on every phone |
+| Czech + Ukrainian, text and voice | cs, uk (and en). Voice is pre-recorded in `audio/` at build time: Czech and English with ElevenLabs (voice Sarah), Ukrainian with the macOS voice Lesya. It plays only when the child taps Listen and works offline on every phone. The ElevenLabs key stays in `.env` on the build machine |
 | Original guide | The child picks the hospital's own clown (from the ambulance wall) or Pip the hedgehog. The PAS version can also pick "no guide" |
 | Parent version | "Informace pro rodiče": the same steps in full, how to talk with the child, the sensitive moments |
 | Doctor approves texts | `/lekar/` → "Kontrola textů": every text in every version and language, photos, open questions, checkboxes, print for sign-off |

@@ -99,12 +99,6 @@ function go(screen, step) {
   stopAudio();
   S.screen = screen; if (step != null) S.step = step;
   save(); render(); window.scrollTo(0, 0);
-  if (screen === 'step' && S.ver === 'pre') autoVoice();
-}
-function autoVoice() {
-  const s = steps()[S.step];
-  const btn = document.querySelector('.step-text [data-audio]');
-  setTimeout(() => play(audioSrc(`${S.exam}-${s.id}-pre`), btn), 350);
 }
 
 function render() {
