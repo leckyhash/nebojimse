@@ -8,7 +8,7 @@ A guide that walks a child through the exam truthfully, before they arrive. Buil
 
 | Requirement in the brief | Where |
 |---|---|
-| Two exams, from arrival to leaving | Blood test (9 steps) and heart exam (6 steps) in `content.js` |
+| Two exams, from arrival to leaving | Blood test (8 steps) and heart exam (7 steps) in `content.js` |
 | Real places | 27 FN Brno photos in `img/`, the echo sound and screen video in `media/` |
 | Preschool version | Goes straight from the guide choice to step 1 (no overview list). Big photo, one short sentence with the duration, icons, voice on the Listen button, guide character |
 | Autism (PAS) version | An overview of all steps with durations before and after the walkthrough (a visual schedule). Literal text, fixed order with a step track, duration on every step, "what you will feel or hear" and "what happens / what you do" lists, identical on every run |
@@ -35,13 +35,19 @@ node tools/build.js
 
 It re-records only the changed voice texts and refreshes the offline file list and cache version in `sw.js`. `node tools/check.js` confirms every text exists in all four languages, every voice file is there, and flags clips whose speaking speed is unusual (a hint of skipped or repeated words; a person still has to listen).
 
-## Open questions for the doctor (also shown in /lekar/)
+## Doctor's answers (28 Nov 2026) and what is still open
 
+Answered by MUDr. Turan and built in:
+- Reward: not always, and not always the same, so it is never promised to the child (no reward step; a note for parents).
+- Holding the legs: common up to 7–8 years, done by nurses in blue shirts, so the child stays completely still.
+- Heart exam: there may be a wait between the ECG and the echo, depending on how busy the day is (its own step).
+
+Still open (also shown on /lekar/):
 - Blood test, waiting room: is the waiting room in the photo the one used for blood tests?
-- Blood test, needle: are the legs always held, or only sometimes? Who holds them?
-- Blood test, reward: does every child get one of the rewards?
+- Heart exam: is the wait right after the ECG or just before the echo, and where?
 - Heart exam, route photos: is the order hall → corridor → cardiology entrance → waiting room right?
 - Heart exam, blood pressure: the cuff photos come from the "Odběr krve" folder. Is it the same device?
+- Sensations not in the materials (cold gel, beeping monitor, dim echo room), "balónky a kolíčky" for the PAS version, how the nurse counts to 20, what happens at the end.
 
 ## Not in git
 

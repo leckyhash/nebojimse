@@ -58,7 +58,7 @@ const listenBtn = (src, cls = '') => `<button class="listen ${cls}" data-audio="
 
 // Download this language's voice files for offline use (photos are cached by the service worker).
 // The cache name changes when recordings change (tools/build.js), so phones never keep an old voice.
-const AUDIO_CACHE = 'nebojimse-audio-ff498bff4d';
+const AUDIO_CACHE = 'nebojimse-audio-2dd4e1a45b';
 // Runs as soon as the parent picks the exam and language (not only at "Start"), so a family that
 // opens the app once at home on Wi-Fi has the voice in the hospital too. "Works offline" is shown
 // only once the app files AND this exam's voice in this language are saved on the phone.
