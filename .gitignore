@@ -1,3 +1,6 @@
 .claude/
 .DS_Store
 project_information/
+# Local secrets written by `elevenlabs onboard`
+/.env
+node_modules/

@@ -1,0 +1,11 @@
+{
+  "name": "nebojimse",
+  "private": true,
+  "description": "Nebojím se výkonu, FN Brno. Static PWA; npm is only used by the build tools.",
+  "scripts": {
+    "build": "node tools/build.js"
+  },
+  "devDependencies": {
+    "@elevenlabs/elevenlabs-js": "^2.80.0"
+  }
+}

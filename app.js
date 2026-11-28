@@ -56,14 +56,16 @@ const ICON = {
 const icon = (name, size = 20) => `<svg class="ico" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[name]}</svg>`;
 const listenBtn = (src, cls = '') => `<button class="listen ${cls}" data-audio="${src}">${icon('speaker')}<span>${ui('listen')}</span></button>`;
 
-// Download this language's voice files for offline use (photos are cached by the service worker)
+// Download this language's voice files for offline use (photos are cached by the service worker).
+// The cache name changes when recordings change (tools/build.js), so phones never keep an old voice.
+const AUDIO_CACHE = 'nebojimse-audio-5f1a1d8c14';
 function cacheAudio() {
   if (!('caches' in window) || !S.exam) return;
   const files = [];
   for (const s of steps()) files.push(audioSrc(`${S.exam}-${s.id}-pre`), audioSrc(`${S.exam}-${s.id}-pas`));
   for (let n = 1; n <= 20; n++) files.push(audioSrc(`n${n}`));
   ['pickGuide', 'planIntro', 'doneText', 'echoWarn', 'count20'].forEach(k => files.push(audioSrc(`ui-${k}`)));
-  caches.open('nebojimse-audio').then(c => Promise.all(files.map(f => c.match(f).then(hit => hit || c.add(f).catch(() => {}))))).catch(() => {});
+  caches.open(AUDIO_CACHE).then(c => Promise.all(files.map(f => c.match(f).then(hit => hit || c.add(f).catch(() => {}))))).catch(() => {});
 }
 
 // ---------------- guides (original characters) ----------------

@@ -1,5 +1,6 @@
 // Offline support. VERSION and ASSETS are written by tools/build.js. Run it before deploying.
-const VERSION = 'nebojimse-9904818428';
+const VERSION = 'nebojimse-32706e8795';
+const AUDIO_CACHE = 'nebojimse-audio-5f1a1d8c14'; // versioned by tools/build.js from audio/manifest.json
 const ASSETS = ["./","index.html","styles.css","content.js","app.js","manifest.webmanifest","icon.svg","icon-180.png","icon-512.png","img/CITLIVE_jehla1.jpg","img/CITLIVE_jehla2.jpg","img/ambulance_lehatko.jpg","img/cekarna.jpg","img/chodba.jpg","img/detska_manzeta.jpg","img/dezinfekce_sprej.jpg","img/dezinfekce_tamponek.jpg","img/echo_gel.jpg","img/echo_obrazovka.jpg","img/echo_pristroj.jpg","img/echo_sonda.jpg","img/ekg_kabely.jpg","img/ekg_kolicky_balonky.jpg","img/evidence1.jpg","img/klaun.png","img/kreslo_modre.jpg","img/kreslo_zlute.jpg","img/manzeta.jpg","img/odberova_mistnost.jpg","img/skrtidlo.jpg","img/strop.jpg","img/tamponky_naplasti.jpg","img/tlakomer.jpg","img/vstup_kardiologie.jpg","img/zkumavky.jpg","media/echo.mp4","media/klaun.mp4","media/zvuk_srdicka.m4a"];
 
 self.addEventListener('install', e => {
@@ -7,7 +8,7 @@ self.addEventListener('install', e => {
 });
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys()
-    .then(keys => Promise.all(keys.filter(k => k !== VERSION && k !== 'nebojimse-audio').map(k => caches.delete(k))))
+    .then(keys => Promise.all(keys.filter(k => k !== VERSION && k !== AUDIO_CACHE).map(k => caches.delete(k))))
     .then(() => self.clients.claim()));
 });
 // Cache-first so it works without signal in the hospital; refresh in the background.
@@ -35,7 +36,7 @@ async function rangeResponse(req) {
     try {
       const full = await fetch(req.url);
       if (!full.ok) return fetch(req);
-      const c = await caches.open(new URL(req.url).pathname.includes('/audio/') ? 'nebojimse-audio' : VERSION);
+      const c = await caches.open(new URL(req.url).pathname.includes('/audio/') ? AUDIO_CACHE : VERSION);
       await c.put(req.url, full.clone());
       return slice(full, req.headers.get('range'));
     } catch { return new Response('', { status: 504 }); }
