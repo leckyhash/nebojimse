@@ -58,14 +58,22 @@ const listenBtn = (src, cls = '') => `<button class="listen ${cls}" data-audio="
 
 // Download this language's voice files for offline use (photos are cached by the service worker).
 // The cache name changes when recordings change (tools/build.js), so phones never keep an old voice.
-const AUDIO_CACHE = 'nebojimse-audio-1112150056';
+const AUDIO_CACHE = 'nebojimse-audio-ff498bff4d';
+// Runs as soon as the parent picks the exam and language (not only at "Start"), so a family that
+// opens the app once at home on Wi-Fi has the voice in the hospital too. "Works offline" is shown
+// only once the app files AND this exam's voice in this language are saved on the phone.
+let voiceReady = '';
 function cacheAudio() {
   if (!('caches' in window) || !S.exam) return;
+  const want = `${S.lang}-${S.exam}`;
   const files = [];
   for (const s of steps()) files.push(audioSrc(`${S.exam}-${s.id}-pre`), audioSrc(`${S.exam}-${s.id}-pas`));
   for (let n = 1; n <= 20; n++) files.push(audioSrc(`n${n}`));
   ['pickGuide', 'planIntro', 'doneText', 'echoWarn', 'count20'].forEach(k => files.push(audioSrc(`ui-${k}`)));
-  caches.open(AUDIO_CACHE).then(c => Promise.all(files.map(f => c.match(f).then(hit => hit || c.add(f).catch(() => {}))))).catch(() => {});
+  caches.open(AUDIO_CACHE)
+    .then(c => Promise.all(files.map(f => c.match(f).then(hit => hit ? true : c.add(f).then(() => true, () => false)))))
+    .then(ok => { if (ok.every(Boolean) && want === `${S.lang}-${S.exam}`) { voiceReady = want; markOffline(); } })
+    .catch(() => {});
 }
 
 // ---------------- guides (original characters) ----------------
@@ -280,6 +288,7 @@ app.addEventListener('click', e => {
     if (k === 'exam' && S.exam !== v) S.step = 0;
     if (k === 'ver' && v === 'pre' && S.guide === 'none') S.guide = null;
     S[k] = v; save();
+    if (k === 'exam' || k === 'lang') cacheAudio();
     if (document.getElementById('sheet').hidden) render(); else { renderSheet(); }
     return;
   }
@@ -343,10 +352,13 @@ function renderSheet() {
 }
 
 // ---------------- offline ----------------
-function markOffline() { const b = document.getElementById('offline-badge'); if (b) b.hidden = false; }
+function markOffline() {
+  const b = document.getElementById('offline-badge');
+  if (b) b.hidden = !(window.__offline && S.exam && voiceReady === `${S.lang}-${S.exam}`);
+}
 if ('serviceWorker' in navigator && location.protocol !== 'file:') {
   navigator.serviceWorker.register('sw.js').then(() => navigator.serviceWorker.ready).then(() => { window.__offline = true; markOffline(); }).catch(() => {});
 }
 
 render();
-if (S.screen === 'step' && S.exam) cacheAudio();
+if (S.exam) cacheAudio();

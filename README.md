@@ -16,7 +16,7 @@ A guide that walks a child through the exam truthfully, before they arrive. Buil
 | Czech + Ukrainian, text and voice | cs, uk, plus sk and en. Slovak texts live in `content-sk.js`, keyed by the Czech original. Voice is pre-recorded in `audio/` at build time: Czech and English with ElevenLabs (voice Sarah), Slovak and Ukrainian with the macOS voices Laura and Lesya. It plays only when the child taps Listen and works offline on every phone. The ElevenLabs key stays in `.env` on the build machine |
 | Original guide | The child picks the hospital's own clown (from the ambulance wall) or Pip the hedgehog. The PAS version can also pick "no guide" |
 | Parent version | "Informace pro rodiče": the same steps in full, how to talk with the child, the sensitive moments |
-| Doctor approves texts | `/lekar/` → "Kontrola textů": every text in every version and language, photos, open questions, checkboxes, print for sign-off |
+| Doctor approves texts | `/lekar/` → "Kontrola textů": every text in every version and language with its voice recording to play, photos, open questions, approval per language (text and voice together), print for sign-off |
 | Extras | QR codes from `/lekar/` (exam + version + language), offline PWA, no personal data |
 
 Special steps: **Vpich** (the needle) has a count-to-20 practice with voice. **Echo** plays the real, loud heartbeat recording in advance (the brief says hearing it first helps).
@@ -33,7 +33,7 @@ After changing texts or media, run this once:
 node tools/build.js
 ```
 
-It re-records only the changed voice texts and refreshes the offline file list and cache version in `sw.js`. `node tools/check.js` confirms every text exists in all four languages and every voice file is there.
+It re-records only the changed voice texts and refreshes the offline file list and cache version in `sw.js`. `node tools/check.js` confirms every text exists in all four languages, every voice file is there, and flags clips whose speaking speed is unusual (a hint of skipped or repeated words; a person still has to listen).
 
 ## Open questions for the doctor (also shown in /lekar/)
 

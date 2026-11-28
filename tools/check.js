@@ -30,5 +30,21 @@ for (const [id, e] of Object.entries(EXAMS)) {
       if (!fs.existsSync(path.join(root, 'audio', l, `${id}-${s.id}-${v}.m4a`))) problems.push(`missing voice audio/${l}/${id}-${s.id}-${v}.m4a`);
   }
 }
-console.log(problems.length ? problems.join('\n') : `check: all texts in ${LANGS.join(', ')}, all photos and voice files present`);
+// Voice clips whose speaking speed is far from the others in the same language usually mean
+// skipped, repeated or garbled words. They still need a human to listen; this only points at suspects.
+const { execFileSync } = require('child_process');
+const rates = {};
+for (const [id, e] of Object.entries(EXAMS)) for (const s of e.steps) for (const l of LANGS) for (const v of ['pre', 'pas']) {
+  const f = path.join(root, 'audio', l, `${id}-${s.id}-${v}.m4a`);
+  if (!fs.existsSync(f)) continue;
+  const sec = +execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', f]).toString();
+  (rates[l] = rates[l] || []).push({ file: `audio/${l}/${id}-${s.id}-${v}.m4a`, cps: s[v][l].length / sec });
+}
+for (const [l, list] of Object.entries(rates)) {
+  const sorted = list.map(x => x.cps).sort((a, b) => a - b), median = sorted[Math.floor(sorted.length / 2)];
+  for (const x of list) if (x.cps < median * 0.65 || x.cps > median * 1.5)
+    problems.push(`listen to ${x.file}: ${x.cps.toFixed(1)} characters/s, the ${l} clips usually run at ${median.toFixed(1)}`);
+}
+
+console.log(problems.length ? problems.join('\n') : `check: all texts in ${LANGS.join(', ')}, all photos and voice files present, no voice clip with an unusual speed`);
 process.exitCode = problems.length ? 1 : 0;

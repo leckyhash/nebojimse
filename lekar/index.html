@@ -48,6 +48,10 @@
     .rv.ok { border-color: #8CC9A6; background: #F3FBF6; }
     .rv-top { display: flex; gap: 10px; align-items: center; }
     .rv-top b { font-size: 17px; }
+    .play { display: inline-block; margin: 6px 0 0; border: 0; border-radius: 999px; background: #E7EFEC; color: var(--primary); font-weight: 800; font-size: 13px; padding: 6px 12px; }
+    .play.on { background: var(--primary); color: #fff; }
+    .rv dd .play { display: table; }
+    @media print { .play { display: none; } }
     .rv-top label { margin-left: auto; display: flex; gap: 6px; align-items: center; font-weight: 800; font-size: 14px; white-space: nowrap; }
     .rv-top input { width: 20px; height: 20px; }
     .rv dl { display: grid; grid-template-columns: 150px 1fr; gap: 6px 12px; margin: 10px 0 0; }
@@ -104,7 +108,7 @@
         <button class="btn" id="b-rv-print">🖨️ Tisk k podpisu</button>
         <span class="count" id="rv-count"></span>
       </div>
-      <p class="note">Zadání: „Texty schvaluje lékař. Aplikace připravuje obsah, zdravotník ho schvaluje dřív, než se dostane k dítěti.“ Žlutě jsou místa, která tým nemohl ověřit z podkladů. Zaškrtnutí se ukládá jen v tomto prohlížeči.</p>
+      <p class="note">Zadání: „Texty schvaluje lékař. Aplikace připravuje obsah, zdravotník ho schvaluje dřív, než se dostane k dítěti.“ Dítě slyší hlas, ne text: u každého kroku si poslechněte nahrávku a schvalte text i hlas, zvlášť pro každý jazyk. Žlutě jsou místa, která tým nemohl ověřit z podkladů. Zaškrtnutí se ukládá jen v tomto prohlížeči.</p>
       <div id="review"></div>
     </section>
   </div>
@@ -139,6 +143,19 @@
       document.getElementById('url').textContent = link();
     }
 
+    // Each text has a play button: the child hears the voice, so the voice is approved together with the text.
+    const play = src => `<button class="play" data-play="${src}" title="Přehrát hlas">▶ Přehrát hlas</button>`;
+    const player = new Audio();
+    document.addEventListener('click', ev => {
+      const b = ev.target.closest('[data-play]'); if (!b) return;
+      const same = !player.paused && player.dataset.src === b.dataset.play;
+      player.pause(); document.querySelectorAll('.play.on').forEach(x => { x.classList.remove('on'); x.textContent = '▶ Přehrát hlas'; });
+      if (same) return;
+      player.src = b.dataset.play; player.dataset.src = b.dataset.play; player.play();
+      b.classList.add('on'); b.textContent = '■ Zastavit';
+      player.onended = () => { b.classList.remove('on'); b.textContent = '▶ Přehrát hlas'; };
+    });
+
     function renderReview() {
       const L = st.rvLang;
       document.getElementById('rv-lang').innerHTML = LANGS.map(l => `<button class="opt ${L === l ? 'sel' : ''}" data-rv="${l}" style="padding:6px 10px">${l.toUpperCase()}</button>`).join(' ');
@@ -146,14 +163,14 @@
       for (const [id, e] of Object.entries(EXAMS)) {
         html += `<div class="exam-h">${e.icon} ${e.name[L]} <small style="font-weight:600;color:var(--muted)">· ${e.total[L]}</small></div>`;
         e.steps.forEach((s, i) => {
-          const key = `${id}.${s.id}`; total++; if (approved[key]) ok++;
+          const key = `${L}.${id}.${s.id}`; total++; if (approved[key]) ok++; // text and voice differ per language, so approval is per language
           html += `<div class="rv ${approved[key] ? 'ok' : ''}">
-            <div class="rv-top"><b>${i + 1}. ${s.title[L]}</b><label><input type="checkbox" data-ap="${key}" ${approved[key] ? 'checked' : ''}> Schváleno</label></div>
+            <div class="rv-top"><b>${i + 1}. ${s.title[L]}</b><label><input type="checkbox" data-ap="${key}" ${approved[key] ? 'checked' : ''}> Text i hlas schváleny</label></div>
             <dl>
               <dt>Fotky</dt><dd class="thumbs">${s.photos.length ? s.photos.map(p => `<img src="../img/${p}.jpg" class="${SENSITIVE.has(p) ? 'sens' : ''}" title="${PHOTOS[p].cs}${SENSITIVE.has(p) ? ' (citlivá)' : ''}">`).join('') : 'bez fotky'}</dd>
               <dt>Délka</dt><dd>${s.dur ? s.dur[L] : 'bez délky'}</dd>
-              <dt>Předškolní děti</dt><dd>${s.pre[L]}</dd>
-              <dt>Přesná verze (PAS)</dt><dd>${s.pas[L]}</dd>
+              <dt>Předškolní děti</dt><dd>${s.pre[L]}${play(`../audio/${L}/${id}-${s.id}-pre.m4a`)}</dd>
+              <dt>Přesná verze (PAS)</dt><dd>${s.pas[L]}${play(`../audio/${L}/${id}-${s.id}-pas.m4a`)}</dd>
               <dt>Upozornění</dt><dd>${[...s.senses.map(k => SENSES[k]), ...s.doing.map(k => DOING[k])].map(x => `${x.i} ${x.t[L]}`).join(' · ') || 'žádná'}</dd>
               <dt>Pro rodiče</dt><dd>${s.parent[L]}</dd>
             </dl>
@@ -164,7 +181,7 @@
       }
       html += `<div class="rv"><b>Jak s dítětem mluvit (pro rodiče)</b><ul>${TALK.map(x => `<li>${x[L]}</li>`).join('')}</ul></div>`;
       document.getElementById('review').innerHTML = html;
-      document.getElementById('rv-count').textContent = `Schváleno ${ok} z ${total} kroků`;
+      document.getElementById('rv-count').textContent = `${L.toUpperCase()}: schváleno ${ok} z ${total} kroků`;
     }
 
     function render() {
