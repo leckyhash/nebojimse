@@ -110,10 +110,11 @@
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+  <script src="../content-sk.js"></script>
   <script src="../content.js"></script>
   <script>
     'use strict';
-    const HOW = { cs: 'Naskenujte fotoaparátem telefonu. Projděte vyšetření s dítětem předem, krok za krokem. Bez instalace a registrace.', uk: 'Відскануйте камерою телефону. Пройдіть обстеження з дитиною заздалегідь, крок за кроком. Без встановлення та реєстрації.', en: 'Scan with your phone camera. Go through the exam with your child in advance, step by step. No app, no registration.' };
+    const HOW = { cs: 'Naskenujte fotoaparátem telefonu. Projděte vyšetření s dítětem předem, krok za krokem. Bez instalace a registrace.', sk: 'Naskenujte fotoaparátom telefónu. Prejdite vyšetrenie s dieťaťom vopred, krok za krokom. Bez inštalácie a registrácie.', uk: 'Відскануйте камерою телефону. Пройдіть обстеження з дитиною заздалегідь, крок за кроком. Без встановлення та реєстрації.', en: 'Scan with your phone camera. Go through the exam with your child in advance, step by step. No app, no registration.' };
     const VERS = { pre: [UI.verPre.cs, UI.verPreSub.cs], pas: [UI.verPas.cs, UI.verPasSub.cs] };
     const st = Object.assign({ exam: 'blood', ver: 'pre', lang: 'cs', tab: 'qr', rvLang: 'cs' }, (() => { try { return JSON.parse(localStorage.getItem('nebojimse.doctor2')) || {}; } catch { return {}; } })());
     let approved = (() => { try { return JSON.parse(localStorage.getItem('nebojimse.approved')) || {}; } catch { return {}; } })();

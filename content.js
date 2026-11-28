@@ -2,13 +2,14 @@
 // (steps, what the child experiences, durations) and presentation slide 6 (sensitive moments).
 // Rule from the brief: nothing may be added: no extra steps, feelings or durations.
 // Every text is a DRAFT until a doctor approves it (see /lekar/ → Kontrola textů).
-// Each text: { cs, uk, en }. pre = preschool version, pas = exact version (autism).
+// Each text: { cs, uk, en } here, plus sk from content-sk.js. pre = preschool version, pas = exact version (autism).
 'use strict';
 
-const LANGS = ['cs', 'uk', 'en'];
-const LANG_NAMES = { cs: 'Čeština', uk: 'Українська', en: 'English' };
-const SPEECH_LANG = { cs: 'cs-CZ', uk: 'uk-UA', en: 'en-GB' };
-const L = (cs, uk, en) => ({ cs, uk, en });
+const LANGS = ['cs', 'sk', 'uk', 'en'];
+const LANG_NAMES = { cs: 'Čeština', sk: 'Slovenčina', uk: 'Українська', en: 'English' };
+const SPEECH_LANG = { cs: 'cs-CZ', sk: 'sk-SK', uk: 'uk-UA', en: 'en-GB' };
+// Slovak comes from content-sk.js (SK), keyed by the Czech text.
+const L = (cs, uk, en) => ({ cs, sk: (typeof SK !== 'undefined' && SK[cs]) || cs, uk, en });
 
 const APPROVAL = { status: 'draft' }; // set to 'approved' after the doctor signs off
 

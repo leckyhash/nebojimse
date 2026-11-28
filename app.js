@@ -58,7 +58,7 @@ const listenBtn = (src, cls = '') => `<button class="listen ${cls}" data-audio="
 
 // Download this language's voice files for offline use (photos are cached by the service worker).
 // The cache name changes when recordings change (tools/build.js), so phones never keep an old voice.
-const AUDIO_CACHE = 'nebojimse-audio-5f1a1d8c14';
+const AUDIO_CACHE = 'nebojimse-audio-1112150056';
 function cacheAudio() {
   if (!('caches' in window) || !S.exam) return;
   const files = [];
@@ -123,7 +123,7 @@ function choice(group, value, title, sub, sel, extra = '') {
 function settingsFields(withExam) {
   return `
     <h2 class="label">${ui('lang')}</h2>
-    <div class="choices three">${LANGS.map(l => choice('lang', l, LANG_NAMES[l], '', S.lang === l)).join('')}</div>
+    <div class="choices two">${LANGS.map(l => choice('lang', l, LANG_NAMES[l], '', S.lang === l)).join('')}</div>
     ${withExam ? `<h2 class="label">${ui('exam')}</h2>
     <div class="choices two">${Object.entries(EXAMS).map(([id, e]) => choice('exam', id, t(e.name), '', S.exam === id, `<span class="big">${e.icon}</span>`)).join('')}</div>` : ''}
     <h2 class="label">${ui('version')}</h2>

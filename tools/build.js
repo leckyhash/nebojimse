@@ -6,7 +6,7 @@ const fs = require('fs'), path = require('path'), crypto = require('crypto');
 (async () => {
 await require('./voice.js').run({ dry: false });
 const root = path.join(__dirname, '..');
-const shell = ['./', 'index.html', 'styles.css', 'content.js', 'app.js', 'manifest.webmanifest', 'icon.svg', 'icon-180.png', 'icon-512.png'];
+const shell = ['./', 'index.html', 'styles.css', 'content-sk.js', 'content.js', 'app.js', 'manifest.webmanifest', 'icon.svg', 'icon-180.png', 'icon-512.png'];
 const dirFiles = d => fs.readdirSync(path.join(root, d)).filter(f => !f.startsWith('.')).map(f => `${d}/${f}`);
 const assets = [...shell, ...dirFiles('img'), ...dirFiles('media')];
 

@@ -12,18 +12,18 @@ const root = path.join(__dirname, '..');
 try { process.loadEnvFile(path.join(root, '.env')); } catch { /* no .env: macOS voices only */ }
 
 const ELEVEN = {
-  langs: ['cs', 'en'],                 // Czech for families, English for the pitch; uk stays on macOS (Lesya) to fit the free 10k/month quota
+  langs: ['cs', 'en'],                 // Czech for families, English for the pitch; sk and uk use macOS voices (Laura, Lesya) to fit the free 10k/month quota
   voiceId: 'EXAVITQu4vr4xnSDxMaL',     // "Sarah" (pre-made, warm and reassuring), from this account's voice list
   model: 'eleven_v4',
   settings: { pre: { stability: 0.5, similarityBoost: 0.75 },   // preschool: a little warmer
               pas: { stability: 0.75, similarityBoost: 0.75 },  // exact version: steady, the same every time
               ui: { stability: 0.6, similarityBoost: 0.75 } },
 };
-const SAY = { voice: { cs: 'Zuzana', uk: 'Lesya', en: 'Daniel' }, rate: { pre: 150, pas: 170, ui: 155 } };
+const SAY = { voice: { cs: 'Zuzana', sk: 'Laura', uk: 'Lesya', en: 'Daniel' }, rate: { pre: 150, pas: 170, ui: 155 } };
 
 const ctx = {};
 vm.createContext(ctx);
-vm.runInContext(fs.readFileSync(path.join(root, 'content.js'), 'utf8') + ';this.C={LANGS,UI,EXAMS};', ctx);
+vm.runInContext(['content-sk.js', 'content.js'].map(f => fs.readFileSync(path.join(root, f), 'utf8')).join('\n') + ';this.C={LANGS,UI,EXAMS};', ctx);
 const { LANGS, UI, EXAMS } = ctx.C;
 
 function jobs() {
