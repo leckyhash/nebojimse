@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
-  <title>Nebojím se – pro lékaře</title>
+  <title>Nebojím se: pro lékaře</title>
   <link rel="icon" href="../icon.svg" type="image/svg+xml">
   <style>
     :root { --bg: #F6F3EE; --card: #fff; --ink: #1F2A2A; --muted: #5F6B6B; --line: #E6E0D6; --primary: #17322E; --accent: #C2561E; --sel: #FBEBDD; --font: ui-rounded, "SF Pro Rounded", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color-scheme: light; }
@@ -72,7 +72,7 @@
   <div class="wrap">
     <header>
       <img src="../icon.svg" alt="">
-      <div><h1>Nebojím se – pro lékaře</h1><p>FN Brno · Dětská nemocnice</p></div>
+      <div><h1>Nebojím se: pro lékaře</h1><p>FN Brno · Dětská nemocnice</p></div>
     </header>
     <div class="tabs">
       <button data-tab="qr">🔳 QR kód pro rodiče</button>
@@ -84,7 +84,7 @@
         <h2>Vyšetření</h2><div class="opts" id="o-exam"></div>
         <h2>Verze pro dítě</h2><div class="opts" id="o-ver"></div>
         <h2>Jazyk rodiny</h2><div class="opts" id="o-lang"></div>
-        <p class="note">🔒 Kód neobsahuje žádné údaje o pacientovi — jen vyšetření, verzi a jazyk. O zobrazení citlivých fotek (jehla) rozhoduje rodič v aplikaci.</p>
+        <p class="note">🔒 Kód neobsahuje žádné údaje o pacientovi, jen vyšetření, verzi a jazyk. O zobrazení citlivých fotek (jehla) rozhoduje rodič v aplikaci.</p>
       </div>
       <aside class="side">
         <div class="card" id="card"></div>
@@ -143,17 +143,17 @@
       document.getElementById('rv-lang').innerHTML = LANGS.map(l => `<button class="opt ${L === l ? 'sel' : ''}" data-rv="${l}" style="padding:6px 10px">${l.toUpperCase()}</button>`).join(' ');
       let html = '', total = 0, ok = 0;
       for (const [id, e] of Object.entries(EXAMS)) {
-        html += `<div class="exam-h">${e.icon} ${e.name[L]} <small style="font-weight:600;color:var(--muted)">— ${e.total[L]}</small></div>`;
+        html += `<div class="exam-h">${e.icon} ${e.name[L]} <small style="font-weight:600;color:var(--muted)">· ${e.total[L]}</small></div>`;
         e.steps.forEach((s, i) => {
           const key = `${id}.${s.id}`; total++; if (approved[key]) ok++;
           html += `<div class="rv ${approved[key] ? 'ok' : ''}">
             <div class="rv-top"><b>${i + 1}. ${s.title[L]}</b><label><input type="checkbox" data-ap="${key}" ${approved[key] ? 'checked' : ''}> Schváleno</label></div>
             <dl>
-              <dt>Fotky</dt><dd class="thumbs">${s.photos.length ? s.photos.map(p => `<img src="../img/${p}.jpg" class="${SENSITIVE.has(p) ? 'sens' : ''}" title="${PHOTOS[p].cs}${SENSITIVE.has(p) ? ' (citlivá)' : ''}">`).join('') : '— (bez fotky)'}</dd>
-              <dt>Délka</dt><dd>${s.dur ? s.dur[L] : '—'}</dd>
+              <dt>Fotky</dt><dd class="thumbs">${s.photos.length ? s.photos.map(p => `<img src="../img/${p}.jpg" class="${SENSITIVE.has(p) ? 'sens' : ''}" title="${PHOTOS[p].cs}${SENSITIVE.has(p) ? ' (citlivá)' : ''}">`).join('') : 'bez fotky'}</dd>
+              <dt>Délka</dt><dd>${s.dur ? s.dur[L] : 'bez délky'}</dd>
               <dt>Předškolní děti</dt><dd>${s.pre[L]}</dd>
               <dt>Přesná verze (PAS)</dt><dd>${s.pas[L]}</dd>
-              <dt>Upozornění</dt><dd>${[...s.senses.map(k => SENSES[k]), ...s.doing.map(k => DOING[k])].map(x => `${x.i} ${x.t[L]}`).join(' · ') || '—'}</dd>
+              <dt>Upozornění</dt><dd>${[...s.senses.map(k => SENSES[k]), ...s.doing.map(k => DOING[k])].map(x => `${x.i} ${x.t[L]}`).join(' · ') || 'žádná'}</dd>
               <dt>Pro rodiče</dt><dd>${s.parent[L]}</dd>
             </dl>
             ${s.verify ? `<div class="verify">❓ K ověření: ${s.verify}</div>` : ''}

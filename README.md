@@ -1,4 +1,4 @@
-# Nebojím se výkonu — Hack jak Brno 2026, FN Brno challenge
+# Nebojím se výkonu: Hack jak Brno 2026, FN Brno challenge
 
 A guide that walks a child through the exam truthfully, before they arrive. Built to the official brief (`project_information/Nebojim_se_vykonu_zadani_vyzvy.docx`) and presentation.
 

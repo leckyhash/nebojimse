@@ -1,6 +1,6 @@
 // ALL TEXT IN THE APP. Source: "Nebojím se výkonu" challenge brief (FN Brno), section 5
 // (steps, what the child experiences, durations) and presentation slide 6 (sensitive moments).
-// Rule from the brief: nothing may be added — no extra steps, feelings or durations.
+// Rule from the brief: nothing may be added: no extra steps, feelings or durations.
 // Every text is a DRAFT until a doctor approves it (see /lekar/ → Kontrola textů).
 // Each text: { cs, uk, en }. pre = preschool version, pas = exact version (autism).
 'use strict';
@@ -14,7 +14,7 @@ const APPROVAL = { status: 'draft' }; // set to 'approved' after the doctor sign
 
 const UI = {
   appName: L('Nebojím se', 'Я не боюся', 'I’m Not Scared'),
-  tagline: L('Průvodce vyšetřením — pravdivě, krok za krokem', 'Путівник обстеженням — чесно, крок за кроком', 'A guide to the exam — truthfully, step by step'),
+  tagline: L('Pravdivý průvodce vyšetřením, krok za krokem', 'Чесний путівник обстеженням, крок за кроком', 'A truthful guide to the exam, step by step'),
   setupTitle: L('Nastavení pro rodiče', 'Налаштування для батьків', 'Settings for parents'),
   lang: L('Jazyk', 'Мова', 'Language'),
   exam: L('Vyšetření', 'Обстеження', 'Examination'),
@@ -27,7 +27,7 @@ const UI = {
   photosShow: L('Zobrazit', 'Показувати', 'Show'),
   photosShowSub: L('Dítě uvidí fotky jehly', 'Дитина побачить фото голки', 'The child will see photos of the needle'),
   photosHide: L('Skrýt', 'Приховати', 'Hide'),
-  photosHideSub: L('Krok zůstane, místo fotky neutrální obrázek', 'Крок залишиться, замість фото — нейтральне зображення', 'The step stays; a neutral picture replaces the photo'),
+  photosHideSub: L('Krok zůstane, místo fotky neutrální obrázek', 'Крок залишиться, замість фото буде нейтральне зображення', 'The step stays; a neutral picture replaces the photo'),
   photosNote: L('Volbu můžete kdykoli změnit v nastavení ⚙.', 'Вибір можна будь-коли змінити в налаштуваннях ⚙.', 'You can change this any time in settings ⚙.'),
   chooseAll: L('Vyberte všechny čtyři možnosti.', 'Оберіть усі чотири параметри.', 'Choose all four options.'),
   startChild: L('Spustit pro dítě', 'Запустити для дитини', 'Start for the child'),
@@ -66,7 +66,7 @@ const UI = {
   close: L('Hotovo', 'Готово', 'Done'),
   home: L('Na začátek', 'На початок', 'Start screen'),
   parentTitle: L('Pro rodiče', 'Для батьків', 'For parents'),
-  parentIntro: L('Tytéž informace jako pro dítě, v plném rozsahu. Dítěti říkejte jen to, co se opravdu stane — v tomto pořadí a s touto délkou.', 'Та сама інформація, що й для дитини, у повному обсязі. Кажіть дитині лише те, що справді станеться, — у цьому порядку й з цією тривалістю.', 'The same information as for the child, in full. Tell your child only what will really happen — in this order and with these durations.'),
+  parentIntro: L('Tytéž informace jako pro dítě, v plném rozsahu. Dítěti říkejte jen to, co se opravdu stane, v tomto pořadí a s touto délkou.', 'Та сама інформація, що й для дитини, у повному обсязі. Кажіть дитині лише те, що справді станеться, у цьому порядку й з цією тривалістю.', 'The same information as for the child, in full. Tell your child only what will really happen, in this order and with these durations.'),
   howTalk: L('Jak s dítětem mluvit', 'Як говорити з дитиною', 'How to talk with your child'),
   moments: L('Chvíle, na kterých záleží nejvíc', 'Моменти, які найважливіші', 'The moments that matter most'),
   stepsTable: L('Průběh krok za krokem', 'Перебіг крок за кроком', 'Step by step'),
@@ -138,7 +138,7 @@ const EXAMS = {
         dur: L('5–30 minut, podle počtu dětí', '5–30 хвилин, залежно від кількості дітей', '5–30 minutes, depending on how many children are waiting'),
         senses: [], doing: ['wait'],
         pre: L('Nejdřív sedíš v čekárně s maminkou nebo tatínkem. Čekáte, až tě zavolají.', 'Спочатку ти сидиш у залі очікування з мамою чи татом. Ви чекаєте, поки тебе покличуть.', 'First you sit in the waiting room with mum or dad. You wait until they call you.'),
-        pas: L('Sedíš s rodičem v čekárně. Čekáš, až tě zavolají. Čekání trvá 5 až 30 minut. Jak dlouho přesně, záleží na tom, kolik dětí čeká.', 'Ти сидиш з мамою або татом у залі очікування. Ти чекаєш, поки тебе покличуть. Очікування триває від 5 до 30 хвилин. Скільки саме — залежить від того, скільки дітей чекає.', 'You sit with your parent in the waiting room. You wait until you are called. Waiting takes 5 to 30 minutes. How long exactly depends on how many children are waiting.'),
+        pas: L('Sedíš s rodičem v čekárně. Čekáš, až tě zavolají. Čekání trvá 5 až 30 minut. Jak dlouho přesně, záleží na tom, kolik dětí čeká.', 'Ти сидиш з мамою або татом у залі очікування. Ти чекаєш, поки тебе покличуть. Очікування триває від 5 до 30 хвилин. Точний час залежить від того, скільки дітей чекає.', 'You sit with your parent in the waiting room. You wait until you are called. Waiting takes 5 to 30 minutes. How long exactly depends on how many children are waiting.'),
         parent: L('Dítě sedí s rodičem v čekárně a čeká, až ho zavolají.', 'Дитина сидить з батьками в залі очікування й чекає, поки її покличуть.', 'The child sits with a parent in the waiting room and waits to be called.'),
         verify: 'Je na fotce čekárna, kde se čeká na odběr?' },
       { id: 'lehatko', icon: '🛏️', photos: ['odberova_mistnost', 'kreslo_zlute', 'kreslo_modre', 'strop'],
@@ -175,7 +175,7 @@ const EXAMS = {
         senses: ['pain'], doing: ['legs'],
         pre: L('Teď píchnutí do ruky. Bolí to, ale dá se to vydržet. Sestřička počítá do 20. Někdo ti může podržet nohy.', 'Тепер укол у руку. Це боляче, але це можна витримати. Медсестра рахує до 20. Хтось може притримати тобі ноги.', 'Now the needle goes into your arm. It hurts, but you can bear it. The nurse counts to 20. Someone may hold your legs.'),
         pas: L('Sestřička ti píchne jehlu do ruky. Bolí to, ale dá se to vydržet. Sestřička při tom počítá do 20. Při vpichu ti někdo může podržet nohy.', 'Медсестра вводить тобі голку в руку. Це боляче, але це можна витримати. У цей час медсестра рахує до 20. Під час уколу хтось може притримати тобі ноги.', 'The nurse puts a needle into your arm. It hurts, but you can bear it. While this happens, the nurse counts to 20. During the needle, someone may hold your legs.'),
-        parent: L('Bolí, ale dá se to vydržet. Sestřička při tom počítá do 20. Dítěti mohou přidržet nohy — řekněte mu to dopředu.', 'Боляче, але можна витримати. Медсестра в цей час рахує до 20. Дитині можуть притримати ноги — скажіть їй про це заздалегідь.', 'It hurts, but it can be borne. The nurse counts to 20. The child’s legs may be held — tell them beforehand.'),
+        parent: L('Bolí, ale dá se to vydržet. Sestřička při tom počítá do 20. Dítěti mohou přidržet nohy. Řekněte mu to dopředu.', 'Боляче, але можна витримати. Медсестра в цей час рахує до 20. Дитині можуть притримати ноги. Скажіть їй про це заздалегідь.', 'It hurts, but it can be borne. The nurse counts to 20. The child’s legs may be held. Tell them beforehand.'),
         verify: 'Přidržení nohou (prezentace, snímek 6): drží se nohy vždy, nebo jen někdy? Kdo je drží?' },
       { id: 'odber', icon: '🧪', photos: ['zkumavky'],
         title: L('Odběr', 'Забір крові', 'Collecting the blood'),
@@ -196,12 +196,12 @@ const EXAMS = {
         dur: null,
         senses: [], doing: [],
         pre: L('Hotovo! Dostaneš odměnu: lízátko, plyšáka nebo obrázek.', 'Готово! Ти отримаєш винагороду: льодяник, м’яку іграшку або малюнок.', 'Done! You get a reward: a lollipop, a soft toy or a picture.'),
-        pas: L('Odběr je hotový. Dostaneš odměnu. Odměna je lízátko, plyšák nebo obrázek.', 'Забір крові закінчено. Ти отримаєш винагороду. Винагорода — це льодяник, м’яка іграшка або малюнок.', 'The blood test is finished. You get a reward. The reward is a lollipop, a soft toy or a picture.'),
+        pas: L('Odběr je hotový. Dostaneš odměnu. Odměna je lízátko, plyšák nebo obrázek.', 'Забір крові закінчено. Ти отримаєш винагороду. Винагорода: льодяник, м’яка іграшка або малюнок.', 'The blood test is finished. You get a reward. The reward is a lollipop, a soft toy or a picture.'),
         parent: L('Lízátko, plyšák nebo obrázek.', 'Льодяник, м’яка іграшка або малюнок.', 'A lollipop, a soft toy or a picture.'),
         verify: 'Dostane dítě vždy jednu z těchto odměn?' },
     ],
     moments: [
-      { t: L('Vpich', 'Укол', 'The needle'), d: L('Bolí, ale krátce — sestřička při tom počítá do 20. Pásek ani dezinfekce nebolí.', 'Боляче, але недовго — медсестра в цей час рахує до 20. Пасок і дезінфекція не болять.', 'It hurts, but briefly — the nurse counts to 20. The band and the disinfectant do not hurt.') },
+      { t: L('Vpich', 'Укол', 'The needle'), d: L('Bolí, ale krátce. Sestřička při tom počítá do 20. Pásek ani dezinfekce nebolí.', 'Боляче, але недовго. Медсестра в цей час рахує до 20. Пасок і дезінфекція не болять.', 'It hurts, but briefly. The nurse counts to 20. The band and the disinfectant do not hurt.') },
       { t: L('Přidržení nohou', 'Притримування ніг', 'Holding the legs'), d: L('Dítě to vnímá jako něco proti své vůli. Pomáhá vědět to dopředu.', 'Дитина сприймає це як щось проти своєї волі. Допомагає знати про це заздалегідь.', 'The child feels this is against their will. Knowing it in advance helps.') },
       { t: L('Rodič, kterému je špatně', 'Батькам стає погано', 'A parent who feels unwell'), d: L('Když odejde, zůstane dítě v nejtěžší chvíli samo. Myslete na to předem.', 'Якщо ви вийдете, дитина залишиться сама в найважчу мить. Подумайте про це заздалегідь.', 'If you leave, your child is alone at the hardest moment. Think about this in advance.') },
     ],
@@ -239,9 +239,9 @@ const EXAMS = {
         dur: L('jedno měření asi 1 minuta, celkem asi 5 minut', 'одне вимірювання приблизно 1 хвилина, загалом приблизно 5 хвилин', 'one measurement about 1 minute, about 5 minutes in total'),
         senses: ['pressHard', 'unpleasant'], doing: ['three', 'noTalk'],
         pre: L('Na ruku ti dají manžetu. Manžeta se nafoukne a ruku silně stiskne. Je to nepříjemné. Měří se to třikrát. Při měření nemluvíš.', 'На руку тобі надягають манжету. Манжета надувається й сильно стискає руку. Це неприємно. Вимірюють тричі. Під час вимірювання не розмовляй.', 'A cuff goes on your arm. The cuff fills with air and squeezes your arm hard. It is unpleasant. It is measured three times. You do not talk while it measures.'),
-        pas: L('Na ruku se ti dá manžeta. Manžeta se nafoukne a ruku silně stiskne. Je to nepříjemné. Měří se třikrát za sebou. Při měření se nemluví. Jedno měření trvá asi 1 minutu. Všechna měření dohromady trvají asi 5 minut.', 'На руку тобі надягають манжету. Манжета надувається й сильно стискає руку. Це неприємно. Вимірюють тричі поспіль. Під час вимірювання не розмовляють. Одне вимірювання триває приблизно 1 хвилину. Усі вимірювання разом — приблизно 5 хвилин.', 'A cuff is put on your arm. The cuff fills with air and squeezes your arm hard. It is unpleasant. It is measured three times in a row. Nobody talks while measuring. One measurement takes about 1 minute. All measurements together take about 5 minutes.'),
+        pas: L('Na ruku se ti dá manžeta. Manžeta se nafoukne a ruku silně stiskne. Je to nepříjemné. Měří se třikrát za sebou. Při měření se nemluví. Jedno měření trvá asi 1 minutu. Všechna měření dohromady trvají asi 5 minut.', 'На руку тобі надягають манжету. Манжета надувається й сильно стискає руку. Це неприємно. Вимірюють тричі поспіль. Під час вимірювання не розмовляють. Одне вимірювання триває приблизно 1 хвилину. Усі вимірювання разом тривають приблизно 5 хвилин.', 'A cuff is put on your arm. The cuff fills with air and squeezes your arm hard. It is unpleasant. It is measured three times in a row. Nobody talks while measuring. One measurement takes about 1 minute. All measurements together take about 5 minutes.'),
         parent: L('Manžeta se nafoukne a ruku silně stiskne. Měří se třikrát za sebou, při měření se nemluví.', 'Манжета надувається й сильно стискає руку. Вимірюють тричі поспіль, під час вимірювання не розмовляють.', 'The cuff inflates and squeezes the arm hard. Measured three times in a row; no talking during measuring.'),
-        verify: 'Fotky tlakoměrů jsou ze složky „Odběr krve“ — odpovídají přístroji na kardiologii?' },
+        verify: 'Fotky tlakoměrů jsou ze složky „Odběr krve“. Odpovídají přístroji na kardiologii?' },
       { id: 'poslech', icon: '🩺', photos: [],
         title: L('Poslech', 'Прослуховування', 'Listening'),
         dur: L('1–2 minuty', '1–2 хвилини', '1–2 minutes'),
@@ -254,12 +254,12 @@ const EXAMS = {
         dur: L('15–30 minut', '15–30 хвилин', '15–30 minutes'),
         senses: ['loud'], doing: [],
         pre: L('Na hrudník ti dají sondu s gelem. Na obrazovce je vidět tvoje srdíčko. Uslyšíš hlasitý zvuk. Poslechni si ho teď.', 'Тобі на груди ставлять датчик з гелем. На екрані видно твоє серце. Ти почуєш гучний звук. Послухай його зараз.', 'A probe with gel goes on your chest. You can see your heart on the screen. You will hear a loud sound. Listen to it now.'),
-        pas: L('Na hrudník se ti dá sonda s gelem. Na obrazovce je obraz tvého srdce. Uslyšíš hlasitý zvuk proudící krve. Tady si ho můžeš poslechnout předem. Trvá to 15 až 30 minut.', 'Тобі на груди ставлять датчик з гелем. На екрані — зображення твого серця. Ти почуєш гучний звук крові, що тече. Тут його можна послухати заздалегідь. Це триває від 15 до 30 хвилин.', 'A probe with gel is put on your chest. The screen shows a picture of your heart. You will hear a loud sound of flowing blood. You can listen to it here in advance. This takes 15 to 30 minutes.'),
+        pas: L('Na hrudník se ti dá sonda s gelem. Na obrazovce je obraz tvého srdce. Uslyšíš hlasitý zvuk proudící krve. Tady si ho můžeš poslechnout předem. Trvá to 15 až 30 minut.', 'Тобі на груди ставлять датчик з гелем. На екрані видно зображення твого серця. Ти почуєш гучний звук крові, що тече. Тут його можна послухати заздалегідь. Це триває від 15 до 30 хвилин.', 'A probe with gel is put on your chest. The screen shows a picture of your heart. You will hear a loud sound of flowing blood. You can listen to it here in advance. This takes 15 to 30 minutes.'),
         parent: L('Sonda s gelem na hrudníku, obraz srdce na obrazovce, hlasitý zvuk proudící krve.', 'Датчик з гелем на грудях, зображення серця на екрані, гучний звук крові, що тече.', 'Probe with gel on the chest, picture of the heart on the screen, loud sound of flowing blood.') },
     ],
     moments: [
       { t: L('Měření tlaku', 'Вимірювання тиску', 'Blood pressure'), d: L('Manžeta ruku silně stiskne. Jediná opravdu nepříjemná část.', 'Манжета сильно стискає руку. Єдина справді неприємна частина.', 'The cuff squeezes the arm hard. The only really unpleasant part.') },
-      { t: L('Zvuk při echu', 'Звук під час ехо', 'The sound during the echo'), d: L('Je nečekaně hlasitý a děti vyleká. Pomáhá slyšet ho předem — pusťte ho dítěti v kroku Echo.', 'Він несподівано гучний і лякає дітей. Допомагає почути його заздалегідь — увімкніть його дитині на кроці «Ехо».', 'It is unexpectedly loud and startles children. Hearing it beforehand helps — play it in the Echo step.') },
+      { t: L('Zvuk při echu', 'Звук під час ехо', 'The sound during the echo'), d: L('Je nečekaně hlasitý a děti vyleká. Pomáhá slyšet ho předem. Pusťte ho dítěti v kroku Echo.', 'Він несподівано гучний і лякає дітей. Допомагає почути його заздалегідь. Увімкніть його дитині на кроці «Ехо».', 'It is unexpectedly loud and startles children. Hearing it beforehand helps. Play it in the Echo step.') },
       { t: L('Rodič se nesmí dotýkat', 'Батьки не можуть торкатися', 'The parent may not touch'), d: L('Při natáčení EKG. Když to dítě neví dopředu, bere to jako odmítnutí.', 'Під час запису ЕКГ. Якщо дитина не знає про це заздалегідь, вона сприймає це як відмову.', 'During the ECG recording. If the child does not know in advance, they take it as rejection.') },
     ],
   },
@@ -268,6 +268,6 @@ const EXAMS = {
 const TALK = [
   L('Mluvte pravdivě. Neslibujte, že to nebude bolet, a nic nezlehčujte.', 'Говоріть правду. Не обіцяйте, що не буде боляче, і нічого не применшуйте.', 'Be truthful. Do not promise it won’t hurt, and do not play anything down.'),
   L('Když něco bolí, řekněte to: „Bolí to, ale dá se to vydržet.“', 'Якщо щось болить, скажіть це: «Це боляче, але це можна витримати».', 'If something hurts, say so: “It hurts, but you can bear it.”'),
-  L('Řekněte jen to, co se opravdu stane — v tomto pořadí a s touto délkou.', 'Кажіть лише те, що справді станеться, — у цьому порядку й з цією тривалістю.', 'Say only what will really happen — in this order and with these durations.'),
+  L('Řekněte jen to, co se opravdu stane, v tomto pořadí a s touto délkou.', 'Кажіть лише те, що справді станеться, у цьому порядку й з цією тривалістю.', 'Say only what will really happen, in this order and with these durations.'),
   L('Projděte průvodce s dítětem předem, klidně opakovaně. Pokaždé je stejný.', 'Пройдіть путівник із дитиною заздалегідь, можна кілька разів. Щоразу він однаковий.', 'Go through the guide with your child in advance, as often as you like. It is the same every time.'),
 ];
