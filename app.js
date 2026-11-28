@@ -68,13 +68,15 @@ function cacheAudio() {
 
 // ---------------- guides (original characters) ----------------
 function pip(size = 96) {
+  // spikes are anchored on the body oval itself (base slightly inside it), so there is no gap
+  const cx = 52, cy = 68, rx = 42, ry = 32;
+  const p = (ang, k) => `${(cx + Math.cos(ang) * rx * k).toFixed(1)} ${(cy - Math.sin(ang) * ry * k).toFixed(1)}`;
   let spikes = '';
   for (let i = 0; i <= 10; i++) {
-    const a = Math.PI * (1.05 - i * 0.1), cx = 52, cy = 64, r = 38;
-    const p = (ang, rad) => `${(cx + Math.cos(ang) * rad).toFixed(1)} ${(cy - Math.sin(ang) * rad * 0.9).toFixed(1)}`;
-    spikes += `<path d="M${p(a - 0.12, r)}L${p(a, r + 16)}L${p(a + 0.12, r)}Z"/>`;
+    const a = Math.PI * (0.96 - i * 0.08);
+    spikes += `<path d="M${p(a - 0.15, 0.86)}L${p(a, 1.44)}L${p(a + 0.15, 0.86)}Z"/>`;
   }
-  return `<svg class="pip" width="${size}" height="${size}" viewBox="0 0 120 110" aria-hidden="true">
+  return `<svg class="pip" width="${size}" height="${size}" viewBox="-10 0 130 110" aria-hidden="true">
     <g fill="#6B4428">${spikes}</g>
     <ellipse cx="52" cy="68" rx="42" ry="32" fill="#8B5E3C"/><ellipse cx="86" cy="72" rx="26" ry="23" fill="#F3D9B1"/>
     <circle cx="111" cy="70" r="6" fill="#2B2A33"/><circle cx="92" cy="62" r="5" fill="#2B2A33"/><circle cx="93.5" cy="60.5" r="1.6" fill="#fff"/>
