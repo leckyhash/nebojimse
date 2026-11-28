@@ -70,7 +70,6 @@ const SK = {
  "Hlasitý zvuk": "Hlasný zvuk",
  "Čekáš": "Čakáš",
  "Sedneš si nebo lehneš": "Sadneš si alebo ľahneš",
- "Větší děti zatnou pěst": "Väčšie deti zatnú päsť",
  "Zůstaneš v klidu": "Zostaneš v pokoji",
  "Svlékneš tričko, sundáš šperky a ponožky": "Vyzlečieš si tričko, dáš dole šperky a ponožky",
  "Ležíš bez hnutí": "Ležíš bez pohnutia",
@@ -116,7 +115,6 @@ const SK = {
  "Sestřička hledá žilku. Hladí tě po ruce a ťuká na ni. Nebolí to. Trvá to 1 až 2 minuty.": "Sestrička hľadá žilku. Hladká ťa po ruke a ťuká na ňu. Nebolí to. Trvá to 1 až 2 minúty.",
  "Sestřička hladí a ťuká na ruku. Nebolí.": "Sestrička hladká a ťuká na ruku. Nebolí.",
  "zůstane na ruce do konce odběru, asi 2–3 minuty": "zostane na ruke do konca odberu, asi 2–3 minúty",
- "Na ruku ti dají pásek. Pásek tlačí, ale nebolí. Větší děti zatnou pěst. Pásek zůstane na ruce až do konce odběru. To je asi 2 až 3 minuty.": "Na ruku ti dajú pásik. Pásik tlačí, ale nebolí. Väčšie deti zatnú päsť. Pásik zostane na ruke až do konca odberu. To je asi 2 až 3 minúty.",
  "Pásek na ruce tlačí, ale nebolí. Větší děti zatnou pěst.": "Pásik na ruke tlačí, ale nebolí. Väčšie deti zatnú päsť.",
  "asi 30 vteřin, než zaschne": "asi 30 sekúnd, kým zaschne",
  "Na ruku ti dají dezinfekci. Dezinfekce studí a voní po alkoholu. Nebolí to. Asi 30 vteřin se čeká, než zaschne.": "Na ruku ti dajú dezinfekciu. Dezinfekcia studí a vonia po alkohole. Nebolí to. Asi 30 sekúnd sa čaká, kým zaschne.",
@@ -172,7 +170,6 @@ const SK = {
  "Nejdřív sedíš v čekárně s tím, kdo s tebou přišel. Čekáte, až tě zavolají. Může to trvat 5 až 30 minut.": "Najprv sedíš v čakárni s tým, kto s tebou prišiel. Čakáte, kým ťa zavolajú. Môže to trvať 5 až 30 minút.",
  "Pak si sedneš nebo lehneš. Ten, kdo s tebou přišel, je u tebe. Trvá to asi minutu.": "Potom si sadneš alebo ľahneš. Ten, kto s tebou prišiel, je pri tebe. Trvá to asi minútu.",
  "Sestřička ti hladí a ťuká na ruku. Hledá žilku. Nebolí to. Trvá to 1 až 2 minuty.": "Sestrička ťa hladká a ťuká na ruku. Hľadá žilku. Nebolí to. Trvá to 1 až 2 minúty.",
- "Na ruku ti dají pásek. Pásek tlačí, ale nebolí. Zůstane na ruce až do konce, asi 2 až 3 minuty. Větší děti zatnou pěst.": "Na ruku ti dajú pásik. Pásik tlačí, ale nebolí. Zostane na ruke až do konca, asi 2 až 3 minúty. Väčšie deti zatnú päsť.",
  "Na ruku ti dají dezinfekci. Studí a voní po alkoholu. Nebolí to. Počkáš, než zaschne, asi 30 vteřin.": "Na ruku ti dajú dezinfekciu. Studí a vonia po alkohole. Nebolí to. Počkáš, kým zaschne, asi 30 sekúnd.",
  "Krev teče do zkumavek a zkumavky se mění. Nebolí to. Zůstaň v klidu. Trvá to 1 až 3 minuty.": "Krv tečie do skúmaviek a skúmavky sa menia. Nebolí to. Zostaň v pokoji. Trvá to 1 až 3 minúty.",
  "Pásek povolí a jehla jde ven. Dostaneš tampónek a náplast. Na tampónek se tlačí asi 2 až 3 minuty.": "Pásik povolí a ihla ide von. Dostaneš tampón a náplasť. Na tampón sa tlačí asi 2 až 3 minúty.",
@@ -192,5 +189,8 @@ const SK = {
  "liší se podle toho, jak je ten den rušno": "líši sa podľa toho, aký rušný je ten deň",
  "Před echem se možná ještě chvíli čeká. Jak dlouho, záleží na tom, kolik je ten den v nemocnici práce.": "Pred echom sa možno ešte chvíľu čaká. Ako dlho, závisí od toho, koľko je v ten deň v nemocnici práce.",
  "Mezi EKG a echem se může čekat. Někdy se nečeká vůbec, někdy déle. Záleží na tom, jak je ten den v nemocnici rušno.": "Medzi EKG a echom sa môže čakať. Niekedy sa nečaká vôbec, niekedy dlhšie. Závisí to od toho, aký rušný je v nemocnici ten deň.",
- "Mezi EKG a echem může být čekání. Jeho délka závisí na tom, jak je ten den rušno.": "Medzi EKG a echom môže byť čakanie. Jeho dĺžka závisí od toho, aký rušný je ten deň."
+ "Mezi EKG a echem může být čekání. Jeho délka závisí na tom, jak je ten den rušno.": "Medzi EKG a echom môže byť čakanie. Jeho dĺžka závisí od toho, aký rušný je ten deň.",
+ "Možná zatneš pěst": "Možno zatneš päsť",
+ "Na ruku ti dají pásek. Pásek tlačí, ale nebolí. Zůstane na ruce až do konce, asi 2 až 3 minuty. Možná ti řeknou, ať zatneš pěst.": "Na ruku ti dajú pásik. Pásik tlačí, ale nebolí. Zostane na ruke až do konca, asi 2 až 3 minúty. Možno ťa požiadajú zatnúť päsť.",
+ "Na ruku ti dají pásek. Pásek tlačí, ale nebolí. Možná ti řeknou, ať zatneš pěst. Pásek zůstane na ruce až do konce odběru. To je asi 2 až 3 minuty.": "Na ruku ti dajú pásik. Pásik tlačí, ale nebolí. Možno ťa požiadajú zatnúť päsť. Pásik zostane na ruke až do konca odberu. To je asi 2 až 3 minúty."
 };
