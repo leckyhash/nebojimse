@@ -58,7 +58,7 @@ const listenBtn = (src, cls = '') => `<button class="listen ${cls}" data-audio="
 
 // Download this language's voice files for offline use (photos are cached by the service worker).
 // The cache name changes when recordings change (tools/build.js), so phones never keep an old voice.
-const AUDIO_CACHE = 'nebojimse-audio-86d3b10726';
+const AUDIO_CACHE = 'nebojimse-audio-f3d2317f30';
 // Runs as soon as the parent picks the exam and language (not only at "Start"), so a family that
 // opens the app once at home on Wi-Fi has the voice in the hospital too. "Works offline" is shown
 // only once the app files AND this exam's voice in this language are saved on the phone.
@@ -162,6 +162,7 @@ const SCREENS = {
       <p class="fine">${ui('draft')}<br>${ui('privacy')}</p>`;
   },
 
+  // No guide is preselected: the child makes a fresh choice every time.
   guide() {
     const opt = (id, art, label) => `<button class="guide-opt ${S.guide === id ? 'sel' : ''}" data-act="pickGuide" data-v="${id}">${art}<b>${label}</b></button>`;
     return `
@@ -297,13 +298,13 @@ app.addEventListener('click', e => {
   const el = e.target.closest('[data-act]');
   if (!el) return;
   switch (el.dataset.act) {
-    case 'startChild': if (S.exam && S.ver && S.photos) { cacheAudio(); go('guide', 0); } break;
+    case 'startChild': if (S.exam && S.ver && S.photos) { cacheAudio(); S.guide = null; go('guide', 0); } break;
     case 'parent': go('parent'); break;
     case 'pickGuide': S.guide = el.dataset.v; S.ver === 'pas' ? go('plan') : go('step', 0); break;
     case 'begin': go('step', 0); break;
     case 'next': S.step < steps().length - 1 ? go('step', S.step + 1) : go('done'); break;
     case 'prev': S.step > 0 ? go('step', S.step - 1) : go(firstScreen()); break;
-    case 'again': go('guide', 0); break;
+    case 'again': S.guide = null; go('guide', 0); break;
     case 'back': back(); break;
     case 'settings': openSheet(); break;
     case 'gto': { const g = document.getElementById('gallery'); g.scrollTo({ left: g.clientWidth * +el.dataset.v, behavior: 'smooth' }); break; }
