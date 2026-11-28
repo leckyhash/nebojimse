@@ -288,13 +288,13 @@ app.addEventListener('click', e => {
   const el = e.target.closest('[data-act]');
   if (!el) return;
   switch (el.dataset.act) {
-    case 'startChild': if (S.exam && S.ver && S.photos) { cacheAudio(); go(S.guide ? 'plan' : 'guide', 0); } break;
+    case 'startChild': if (S.exam && S.ver && S.photos) { cacheAudio(); go('guide', 0); } break;
     case 'parent': go('parent'); break;
     case 'pickGuide': S.guide = el.dataset.v; go('plan'); break;
     case 'begin': go('step', 0); break;
     case 'next': S.step < steps().length - 1 ? go('step', S.step + 1) : go('done'); break;
     case 'prev': S.step > 0 ? go('step', S.step - 1) : go('plan'); break;
-    case 'again': go('plan', 0); break;
+    case 'again': go('guide', 0); break;
     case 'back': back(); break;
     case 'settings': openSheet(); break;
     case 'gto': { const g = document.getElementById('gallery'); g.scrollTo({ left: g.clientWidth * +el.dataset.v, behavior: 'smooth' }); break; }
